@@ -1,13 +1,15 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const uuid = url.searchParams.get('UUID') || env.UUID || '196363';
-    const sni = url.searchParams.get('HOST') || 'telecom.com';
-    const proxy = url.searchParams.get('PROXYIP') || '1.1.1.1';
+    const pUUID = url.pathname.split('/')[1];
+    const qUUID = url.searchParams.get('UUID');
+    const mUUID = "ec872d8f-72b0-4a04-b612-0327d85e18ed";
 
-    if (url.pathname.includes(uuid)) {
-      const config = `vless://${uuid}@${proxy}:443?encryption=none&security=tls&sni=${sni}&type=ws&host=${sni}&path=%2F%3Fed%3D2048#Network`;
-      return new Response(config, {
+    if (pUUID === 'd53909c7-6094-4eda-93ec-3f96ebc1914b' || qUUID === mUUID || pUUID === '196363') {
+      const h = url.searchParams.get('HOST') || 'telecom.com';
+      const p = url.searchParams.get('PROXYIP') || '1.1.1.1';
+      const c = `vless://${mUUID}@${p}:443?encryption=none&security=tls&sni=${h}&type=ws&host=${h}&path=%2F%3Fed%3D2048#Network`;
+      return new Response(c, {
         status: 200,
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }
       });
